@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI Weight Loss Plan Payment</title>
+  <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+  <h1>7-Day AI Weight Loss Plan</h1>
+  <p>Pay $4.99 to unlock your personalized plan instantly!</p>
+  <button id="checkout-button">Buy Now</button>
+
+  <script>
+    const stripe = Stripe('pk_test_51RlQblR9f7o7uoJrYYeD9NcKBgUD0waRf40mLJfxwwXmBonxfOLAlSlg1LCN82fGvOjMEHoRnSYdeji8vc5oCnFM00Cdlva8UY'); // Replace with your Stripe Publishable Key
+
+    document.getElementById('checkout-button').addEventListener('click', async () => {
+      try {
+        const response = await fetch('http://localhost:5000/create-checkout-session', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+
+        const session = await response.json();
+
+        if(session.url) {
+          // Redirect to Stripe Checkout page
+          window.location.href = session.url;
+        } else {
+          alert('Failed to create checkout session.');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Error initiating payment.');
+      }
+    });
+  </script>
+</body>
+</html>

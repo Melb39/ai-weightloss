@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Your AI Weight Loss Plan</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 30px;
+      background-color: #f9f9f9;
+    }
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+    }
+    #plan {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      max-width: 700px;
+      margin: 30px auto;
+      white-space: pre-wrap;
+    }
+    .loading {
+      text-align: center;
+      font-style: italic;
+      color: gray;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎯 Your 7-Day AI Weight Loss Plan</h1>
+  <div id="plan" class="loading">Loading your custom plan...</div>
+
+  <script>
+    fetch('/generate-plan')
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('plan').classList.remove('loading');
+        document.getElementById('plan').innerText = data.plan || 'No plan returned.';
+      })
+      .catch(err => {
+        document.getElementById('plan').classList.remove('loading');
+        document.getElementById('plan').innerText = 'An error occurred while loading your plan.';
+        console.error(err);
+      });
+  </script>
+</body>
+</html>
